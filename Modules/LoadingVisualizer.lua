@@ -21,7 +21,7 @@ function LoadingSystem:ShowUI(initialText)
     if Active then return end
     Active = true
 
-    initialText = initialText or "Attempting to load.."
+    initialText = initialText or "Loading..."
 
     local Container = Instance.new("ScreenGui")
     Container.Name = "ResolveLoader"
@@ -61,6 +61,23 @@ function LoadingSystem:ShowUI(initialText)
     Logo.Image = "rbxassetid://112939492797247"
     Instance.new("UICorner", Logo).CornerRadius = UDim.new(1, 0)
 
+    -- Divider
+    local Divider = Instance.new("Frame")
+    Divider.Parent = Logo
+    Divider.Position = UDim2.new(-0.91, 0, 1.15, 0)
+    Divider.Size = UDim2.new(0, 275, 0, 2)
+    Divider.BorderSizePixel = 0
+    Divider.BackgroundTransparency = 1
+
+    local DividerGradient = Instance.new("UIGradient")
+    DividerGradient.Color = ColorSequence.new {
+        ColorSequenceKeypoint.new(0, Color3.fromRGB(18, 18, 18)),
+        ColorSequenceKeypoint.new(0.5, Color3.fromRGB(224, 0, 17)),
+        ColorSequenceKeypoint.new(1, Color3.fromRGB(18, 18, 18))
+    }
+    DividerGradient.Parent = Divider
+
+    -- Loading text
     local TextLabel = Instance.new("TextLabel")
     TextLabel.Parent = Background
     TextLabel.Position = UDim2.new(0.1, 0, 0.8, 0)
@@ -77,9 +94,10 @@ function LoadingSystem:ShowUI(initialText)
         Background = Background,
         Shadow = Shadow,
         Logo = Logo,
+        Divider = Divider,
         Text = TextLabel
     }
-    
+
     Tween(Background, {
         Size = UDim2.new(0, 400, 0, 219),
         BackgroundTransparency = 0
@@ -87,6 +105,7 @@ function LoadingSystem:ShowUI(initialText)
 
     Tween(Shadow, { ImageTransparency = 0.62 }, 0.45):Play()
     Tween(Logo, { ImageTransparency = 0 }, 0.45):Play()
+    Tween(Divider, { BackgroundTransparency = 0 }, 0.45):Play()
     Tween(TextLabel, { TextTransparency = 0 }, 0.45):Play()
 end
 
@@ -113,6 +132,7 @@ function LoadingSystem:HideUI()
 
     Tween(UI.Shadow, { ImageTransparency = 1 }, 0.4):Play()
     Tween(UI.Logo, { ImageTransparency = 1 }, 0.4):Play()
+    Tween(UI.Divider, { BackgroundTransparency = 1 }, 0.4):Play()
     Tween(UI.Text, { TextTransparency = 1 }, 0.4):Play()
 
     task.wait(0.45)
