@@ -1,0 +1,12 @@
+{
+  "killswitch": false,
+  "message": "",
+
+  "executors": {
+    "Volt": true,
+    "Potassium": true,
+    "ChocoSploit": true,
+    "Seliware": true,
+    "Delta": true
+  }
+}
